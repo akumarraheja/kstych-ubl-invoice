@@ -39,6 +39,7 @@ class Invoice implements XmlSerializable
     private $delivery;
     private $orderReference;
     private $contractDocumentReference;
+    private $billingreference;
 
     /**
      * @return string
@@ -497,6 +498,21 @@ class Invoice implements XmlSerializable
     }
 
     /**
+     * @return Invoice
+     */
+    public function setBillingReference(BillingReference $billingreference){
+        $this->billingreference = $billingreference;
+        return $this;
+    }
+
+    /**
+     * @return BillingReference
+     */
+    public function getBillingReference(){
+        return $this->billingreference;
+    }
+
+    /**
      * @return ContractDocumentReference
      */
     public function getContractDocumentReference(): ?ContractDocumentReference
@@ -640,6 +656,12 @@ class Invoice implements XmlSerializable
         if ($this->orderReference != null) {
             $writer->write([
                 Schema::CAC . 'OrderReference' => $this->orderReference
+            ]);
+        }
+
+        if($this->billingreference != null) {
+            $writer->write([
+                Schema::CAC.'BillingReference' => $this->billingreference
             ]);
         }
 

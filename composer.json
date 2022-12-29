@@ -1,5 +1,5 @@
 {
-    "name": "num-num/ubl-invoice",
+    "name": "akumarraheja/kstych-ubl-invoice",
     "description": "A modern object-oriented PHP library to create valid UBL files",
     "keywords": [
         "ubl",

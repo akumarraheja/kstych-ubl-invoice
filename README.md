@@ -1,5 +1,9 @@
 # UBL-Invoice
 
+Original Repo: https://github.com/num-num/ubl-invoice.git
+
+This is a copy of https://github.com/num-num/ubl-invoice.git
+
 A modern object-oriented PHP library to create valid UBL files. Please feel free to [contribute](https://github.com/num-num/ubl-invoice/pulls) if you are missing features or tags.
 
 ## Installation and usage
