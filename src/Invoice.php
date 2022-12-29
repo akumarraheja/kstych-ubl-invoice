@@ -40,6 +40,7 @@ class Invoice implements XmlSerializable
     private $orderReference;
     private $contractDocumentReference;
     private $billingreference;
+    private $invoiceSubType;
 
     /**
      * @return string
@@ -175,9 +176,10 @@ class Invoice implements XmlSerializable
      * See also: src/InvoiceTypeCode.php
      * @return Invoice
      */
-    public function setInvoiceTypeCode(string $invoiceTypeCode): Invoice
+    public function setInvoiceTypeCode(string $invoiceTypeCode, string $invoiceSubType): Invoice
     {
         $this->invoiceTypeCode = $invoiceTypeCode;
+        $this->invoiceSubType = $invoiceSubType;
         return $this;
     }
 
@@ -608,6 +610,15 @@ class Invoice implements XmlSerializable
         }
 
         if ($this->invoiceTypeCode !== null) {
+            $writer->write([
+                [
+                    'name' => Schema::CBC . $this->xmlTagName . 'TypeCode',
+                    'value' => $this->invoiceTypeCode,
+                    'attributes' => [
+                        'name' => $this->invoiceSubType
+                    ]
+                ]
+            ]);
             $writer->write([
                 Schema::CBC . $this->xmlTagName . 'TypeCode' => $this->invoiceTypeCode
             ]);
