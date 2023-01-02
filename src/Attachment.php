@@ -12,6 +12,7 @@ class Attachment implements XmlSerializable
 {
     private $filePath;
     private $externalReference;
+    private $rawdata;
 
     /**
      * @throws Exception exception when the mime type cannot be determined
@@ -24,6 +25,22 @@ class Attachment implements XmlSerializable
         }
 
         throw new Exception('Could not determine mime_type of '.$this->filePath);
+    }
+
+    /**
+     * @return string
+     */
+    public function getRawData(): ?string{
+        return $this->rawdata;
+    }
+    
+    /**
+     * @param string $rawdata
+     * @return Attachment
+     */
+    public function setRawData($rawdata): Attachment{
+        $this->rawdata = $rawdata;
+        return $this;
     }
 
     /**
@@ -100,6 +117,13 @@ class Attachment implements XmlSerializable
                     'mimeCode' => $mimeType,
                     'filename' => basename($this->filePath)
                 ]
+            ]);
+        }
+
+        if($this->rawdata) {
+
+            $writer->write([
+                Schema::CBC . 'EmbeddedDocumentBinaryObject' => $this->rawdata,
             ]);
         }
 
