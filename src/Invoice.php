@@ -41,6 +41,23 @@ class Invoice implements XmlSerializable
     private $contractDocumentReference;
     private $billingreference;
     private $invoiceSubType;
+    private $uuid;
+
+    /**
+     * @return string
+     */
+    public function getUUID(): ?string{
+        return $this->uuid;
+    }
+
+    /**
+     * @param string $uuid
+     * @return Invoice
+     */
+    public function setUUID($uuid): Invoice{
+        $this->uuid = $uuid;
+        return $this;
+    }
 
     /**
      * @return string
@@ -582,6 +599,12 @@ class Invoice implements XmlSerializable
             Schema::CBC . 'UBLVersionID' => $this->UBLVersionID,
             Schema::CBC . 'CustomizationID' => $this->customizationID,
         ]);
+
+        if($this->uuid !== null){
+            $writer->write([
+                Schema::CBC . 'UUID' => $this->uuid,
+            ]);
+        }
 
         if ($this->profileID !== null) {
             $writer->write([
