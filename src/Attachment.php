@@ -12,6 +12,7 @@ class Attachment implements XmlSerializable
 {
     private $filePath;
     private $externalReference;
+    private $name;
     private $rawdata;
 
     /**
@@ -38,8 +39,9 @@ class Attachment implements XmlSerializable
      * @param string $rawdata
      * @return Attachment
      */
-    public function setRawData($rawdata): Attachment{
+    public function setRawData($rawdata, $name): Attachment{
         $this->rawdata = $rawdata;
+        $this->name = $name;
         return $this;
     }
 
@@ -123,7 +125,11 @@ class Attachment implements XmlSerializable
         if($this->rawdata) {
 
             $writer->write([
-                Schema::CBC . 'EmbeddedDocumentBinaryObject' => $this->rawdata,
+                'name' => Schema::CBC . 'EmbeddedDocumentBinaryObject',
+                'value' => $this->rawdata,
+                'attributes' => [
+                    'name' => $this->name,
+                ]
             ]);
         }
 
